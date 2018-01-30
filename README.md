@@ -8,6 +8,7 @@ Implementação de algoritmos de ordenação
 	<li> Heap sort </li>
 	
 </ul>
+
 # Screenshot
-![](https://i.imgur.com/S6ldg2R.png)
+![screenshot](https://i.imgur.com/S6ldg2R.png)
 
