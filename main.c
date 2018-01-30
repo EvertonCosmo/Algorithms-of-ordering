@@ -36,6 +36,7 @@ void insertionSort(int* v, int n){
             v[j] = v[j-1];
         }
         v[j] = aux;
+        
 
     }
 }
@@ -70,6 +71,9 @@ void mergeSort(int* v, int inicio, int fim){
       merge(v,inicio,meio,fim);
     }
 }
+/*
+    faltando implementação do merge não recursivo
+*/
 // void merge(int *v, int inicio, int meio, int fim){
 //     int* temp, p1, p2, tamanho, i, j ,k ;
 //     int fim1 = 0; fim2 = 0;
