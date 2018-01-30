@@ -1,5 +1,5 @@
-# Algoritmos-de-ordenacao
-Implementação de algoritmos de ordenação 
+# Algorithms-of-ordering
+Implementation of sorting algorithms
 <ul type="circle">
 	<li> Bubble sort </li>
 	<li> Insertion sort </li>
