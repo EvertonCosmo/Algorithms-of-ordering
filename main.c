@@ -1,12 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void mostra();
-void criaHeap();
+    
+/* Mostra os elementos do vetor */
+void mostra(int* v, int n){
+    int i;
+        for(i=0; i<n; i++){
+            printf("%d\t",v[i]);
+        }
+        printf("\n \n");
+    }
+
+
 /* No for pega o elemento  maior e coloca no final a fim de ordenar.
     Vai verificando e faz a troca
 */
-
 void bubbleSort(int* v, int n){//vetor e seu tamanho;
 
     int i, aux,continua;
@@ -60,42 +68,45 @@ void selectionSort(int* v, int n){
     }
 }
 
+
+void intercala(int p,int q,int r,int* v){
+    int i,j,k, *w;
+    w = (int*)malloc((r-p)*sizeof(int));
+    i=p;
+    j=q;
+    k=0;
+
+    while(i<q && j<r){
+        if(v[i] <= v[j]){
+            w[k++]=v[i++];
+        }else{
+            w[k++] = v[j++];
+        }
+    }
+    while(i<q){
+        w[k++] = v[i++];
+    }
+    while(j<r){
+        w[k++]=v[j++];
+    }
+
+    for(i=p; i<r; i++){
+        v[i]=w[i-p];    
+    }
+    free(w);
+}
+
 /*Merge Sort é um algoritmo recursivo*/
 
-void mergeSort(int* v, int inicio, int fim){
-    int meio;
-    if(inicio < fim){
-        meio  = (inicio+fim)/2;
-        mergeSort(v,inicio,fim);
-        mergeSort(v,meio+1,fim);
-      merge(v,inicio,meio,fim);
+void mergeSort(int p, int r,int* v){
+    if(p < r-1){
+        int q = (p+r) / 2;
+        mergeSort(p,q,v);
+        mergeSort(q,r,v);
+        intercala(p,q,r+1,v);
     }
 }
-/*
-    faltando implementação do merge não recursivo
-*/
-// void merge(int *v, int inicio, int meio, int fim){
-//     int* temp, p1, p2, tamanho, i, j ,k ;
-//     int fim1 = 0; fim2 = 0;
 
-//     tamanho = fim + inicio +1;
-
-//     p1 = inicio;
-//     p2 = meio + 1;
-
-
-//     temp =(int* ) malloc(tamanho*sizeof(int));
-
-//     if(temp != NULL){
-//         for(i=0;  i<tamanho; i++){  
-//             if(!fim1 && !fim2){
-
-//             }
-//         }
-//     }
-
-
-// }
 
 int particiona(int* v, int inicio, int final) {
     int esq, dir, pivo, aux;
@@ -135,10 +146,34 @@ if(fim > inicio){
 }
 
 }
+void criaHeap(int *vet, int i, int f ) {
+    int aux = vet[i]; //Posição PAI
+
+    int j = i*2+1; //filho
+
+
+    while(j <= f ){
+        if(j < f){
+            if(vet[j] < vet[j+1]){ /*Pai tem dois filhos. Quem é o maior*/
+
+                j=j+1;
+            }
+        }
+        if(aux < vet[j] ){ /*FILHO maior que o PAI?*/
+            vet[i] = vet[j];//FILHO se torna PAI
+            i = j;
+            j = 2 * i +1;   //Repetir o processo
+        }else{
+            j = f + 1;
+        }
+    }
+    vet[i] = aux; //Antigo PAI ocupa lugar do último filho analisado 
+
+}
 
 void heapSort(int* v, int n) {
     int i, aux;
-    /*Cria heap apartir dos dados*/
+    /*Cria heap a partir dos dados*/
     for(i=(n-1)/2; i>=0; i--){
         criaHeap(v,i , n-1);
     }   
@@ -155,30 +190,7 @@ void heapSort(int* v, int n) {
     }
 
 }
-void criaHeap(int *vet, int i, int f ) {
-    int aux = vet[i]; //Posição PAI
 
-    int j = i*2+1; //filho
-
-
-    while(j <= f ){
-        if(j < f){
-            if(vet[j] < vet[j+1]){ /*Pai tem dois filhos. Quem é o maior*/
-
-                j=j+1;
-            }
-        }
-        if(aux < vet[j] ){ /*FILHO maior que o PAI?*/
-            vet[i] = vet[j]//FILHO se torna PAI
-            i = j;
-            j = 2 * i +1;   //Repetir o processo
-        }else{
-            j = f + 1;
-        }
-    }
-    vet[i] = aux; //Antigo PAI ocupa lugar do último filho analisado 
-
-}
 
 
 
@@ -193,7 +205,7 @@ int main(){
     bubbleSort(vetor,n);
     
     printf("Bubble Sort\n");
-    mostra(vetor,n);
+     mostra(vetor,n);
 
 
     insertionSort(vetor,n);
@@ -203,38 +215,26 @@ int main(){
 
     selectionSort(vetor,n);
     printf("Selection Sort\n");
-
     mostra(vetor,n);
-    /*Passa o inicio e o fim do vetor
-        Ex: 10 posições 
-        inicio:0
-        fim:9
-    */
 
-    /*mergeSort(vetor, 0, 5);//Vetor, inicio e fim 
+
+    mergeSort(0, 5,vetor);
     printf("Merge Sort\n");
 
     mostra(vetor,n);
-    */
+    
 
-    quickSort(vetor, 0, 5);
-    printf("Quick Sort\n");
+     quickSort(vetor, 0, 5);
+     printf("Quick Sort\n");
 
-    mostra(vetor,n);
+     mostra(vetor,n);
 
-    heapSort(vetor,n);
-    printf("Heap Sort\n");
+     heapSort(vetor,n);
+     printf("Heap Sort\n");
 
-    mostra(vetor,n);
+     mostra(vetor,n);
 }
 
 
 
 
-void mostra(int* v, int n){
-    int i;
-        for(i=0; i<n; i++){
-            printf("%d\t",v[i]);
-        }
-        printf("\n \n");
-    }
